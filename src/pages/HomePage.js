@@ -4,6 +4,7 @@ import { MainLayout } from '../components/layout/MainLayout';
 import { informationCard } from '../dummyData';
 import { InformationCard } from '../components/InformationCard';
 import { Stack } from '@mui/material';
+import { BookTable } from '../components/bookTable/BookTable';
 
 export const HomePage = () => {
   return (
@@ -20,6 +21,7 @@ export const HomePage = () => {
             />
           ))}
         </Stack>
+        <BookTable />
       </MainLayout>
     </>
   );
