@@ -7,18 +7,20 @@ import { Stack } from '@mui/material';
 
 export const HomePage = () => {
   return (
-    <MainLayout>
+    <>
       <Header />
-      <Stack direction={'row'} spacing={3}>
-        {informationCard.map((card) => (
-          <InformationCard
-            key={card.id}
-            icon={card.icon}
-            title={card.title}
-            description={card.description}
-          />
-        ))}
-      </Stack>
-    </MainLayout>
+      <MainLayout>
+        <Stack direction={'row'} spacing={3}>
+          {informationCard.map((card) => (
+            <InformationCard
+              key={card.id}
+              icon={card.icon}
+              title={card.title}
+              description={card.description}
+            />
+          ))}
+        </Stack>
+      </MainLayout>
+    </>
   );
 };
