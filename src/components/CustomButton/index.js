@@ -11,6 +11,7 @@ export const CustomButton = ({ width, children, variant = 'contained' }) => {
   );
 };
 
+// gio c se style nhu nay
 const StyledButton = styled(Button)({
   borderRadius: '40px',
   backgroundColor: '#fe5f41',
