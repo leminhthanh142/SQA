@@ -18,8 +18,9 @@ time, mark, audio, video {
     vertical-align: baseline;
     color: #6e6575;
     text-decoration: none;
+    box-sizing: border-box;
 }
-/* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
@@ -28,6 +29,12 @@ body {
     line-height: 1;
     font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
+
+html,body {
+    width: 100%;
+    height: 100%;
+}
+
 ol, ul {
     list-style: none;
 }

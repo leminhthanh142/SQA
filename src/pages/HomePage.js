@@ -22,6 +22,8 @@ export const HomePage = () => {
           ))}
         </Stack>
         <BookTable />
+        <BookTable />
+        <BookTable />
       </MainLayout>
     </>
   );
