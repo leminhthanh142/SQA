@@ -3,9 +3,9 @@ import { Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 
-export const CustomButton = ({ width, children, variant = 'contained' }) => {
+export const CustomButton = ({ width, children, variant = 'contained', padding }) => {
   return (
-    <StyledButton sx={{ width }} variant={variant}>
+    <StyledButton sx={{ width, padding }} variant={variant}>
       {children}
     </StyledButton>
   );
@@ -22,6 +22,7 @@ const StyledButton = styled(Button)({
 
 CustomButton.propTypes = {
   width: PropTypes.number,
+  padding: PropTypes.string,
   children: PropTypes.node,
   variant: PropTypes.oneOf(['text', 'outlined', 'contained'])
 };

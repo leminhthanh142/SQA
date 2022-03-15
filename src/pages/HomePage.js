@@ -11,7 +11,7 @@ export const HomePage = () => {
     <>
       <Header />
       <MainLayout>
-        <Stack direction={'row'} spacing={3}>
+        <Stack direction={'row'} spacing={3} mb={10}>
           {informationCard.map((card) => (
             <InformationCard
               key={card.id}
