@@ -34,11 +34,13 @@ export const Header = () => {
         <Link to={'/'}>Home</Link>
         <Link to={'/menu'}>Menu</Link>
         <Link to={'/contact'}>Contact</Link>
-        <Link to={'/booking'}>Book a Table</Link>
       </Stack>
-      <CustomButton variant={'contained'} width={130}>
-        <ShoppingCartIcon />
-      </CustomButton>
+      <Box>
+        <Link to={'/booking'}>Book a Table</Link>
+        <CustomButton variant={'contained'} width={130}>
+          <ShoppingCartIcon />
+        </CustomButton>
+      </Box>
     </Container>
   );
 };

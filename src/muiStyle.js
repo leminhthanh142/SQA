@@ -22,6 +22,11 @@ export const theme = createTheme({
       fontWeight: 700,
       fontSize: 26
     },
+    h5: {
+      fontFamily: `"Mitr",sans-serif`,
+      fontWeight: 700,
+      fontSize: 24
+    },
     p: {
       fontFamily: `"Raleway",sans-serif`
     },

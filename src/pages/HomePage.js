@@ -2,14 +2,15 @@ import React from 'react';
 import { MainLayout } from '../components/layout/MainLayout';
 import { informationCard } from '../dummyData';
 import { InformationCard } from '../components/InformationCard';
-import { Stack, Typography, Box } from '@mui/material';
+import { Stack, Typography, Box, styled } from '@mui/material';
 import { BookTable } from '../components/bookTable/BookTable';
+import { PopularDishes } from '../components/PopularDishes';
 
 export const HomePage = () => {
   return (
     <>
       <MainLayout>
-        <Box mt={10}>
+        <Wrapper mt={15}>
           <Box mb={3}>
             <Typography variant={'h2'} align={'center'}>
               Best way to eat healthy food
@@ -31,9 +32,18 @@ export const HomePage = () => {
               />
             ))}
           </Stack>
-        </Box>
-        <BookTable />
+        </Wrapper>
+        <PopularDishes />
+        <Wrapper mt={15}>
+          <BookTable />
+        </Wrapper>
       </MainLayout>
     </>
   );
 };
+
+export const Wrapper = styled(Box)({
+  maxWidth: 1320,
+  marginLeft: 'auto',
+  marginRight: 'auto'
+});
