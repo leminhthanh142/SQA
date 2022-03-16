@@ -56,12 +56,12 @@ export const BookTable = () => {
   return (
     <Box maxWidth={'70%'} margin={'0 auto'}>
       <Box mb={3}>
-        <Typography variant="h3" sx={{ color: '#4d312c', fontWeight: 'bold' }} align={'center'}>
+        <Typography variant="h2" sx={{ fontWeight: 'bold' }} align={'center'}>
           Book a table
         </Typography>
       </Box>
-      <Box typography={'subtitle1'} mb={5}>
-        <Typography align={'center'}>
+      <Box mb={5}>
+        <Typography variant={'subtitle1'} align={'center'}>
           Making a reservation at Délicious restaurant is easy and takes just a couple of minutes.
         </Typography>
       </Box>

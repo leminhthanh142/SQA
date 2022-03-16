@@ -2,6 +2,8 @@ import React from 'react';
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import { createStyles, makeStyles } from '@mui/styles';
+import { Header } from '../Header';
+import { HeroBackground } from '../HeroBackground';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -14,7 +16,13 @@ const useStyles = makeStyles((theme) =>
 
 export const MainLayout = ({ children }) => {
   const classes = useStyles();
-  return <Box className={classes.container}>{children}</Box>;
+  return (
+    <>
+      <Header />
+      <HeroBackground />
+      <Box className={classes.container}>{children}</Box>
+    </>
+  );
 };
 
 MainLayout.propTypes = {

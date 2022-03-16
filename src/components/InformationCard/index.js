@@ -26,10 +26,10 @@ export const InformationCard = ({ icon, title, description }) => {
         {icon}
       </Box>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div" align={'center'}>
+        <Typography gutterBottom variant="h4" component="div" align={'center'}>
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary" align={'center'}>
+        <Typography variant="body1" color="text.secondary" align={'center'}>
           {description}
         </Typography>
       </CardContent>

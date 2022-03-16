@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 
 export const CustomButton = ({ width, children, variant = 'contained', padding }) => {
   return (
     <StyledButton sx={{ width, padding }} variant={variant}>
-      {children}
+      <Typography sx={{ color: '#ffffff' }}>{children}</Typography>
     </StyledButton>
   );
 };

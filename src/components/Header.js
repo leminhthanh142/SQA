@@ -52,7 +52,7 @@ const Container = styled(Box)(({ isShrink }) => ({
   transition: 'all 0.4s',
   background: isShrink ? 'rgb(255,244,242)' : 'transparent',
   boxShadow: isShrink ? '0 0 10px 8px rgba(0,0,0,0.1)' : 'none',
-  position: isShrink ? 'fixed' : 'relative',
+  position: isShrink ? 'fixed' : 'absolute',
   top: 0,
   height: 80,
   width: '100%',
