@@ -6,11 +6,16 @@ import { Stack, Typography, Box, styled } from '@mui/material';
 import { BookTable } from '../components/bookTable/BookTable';
 import { PopularDishes } from '../components/PopularDishes';
 import { HeroBackground } from '../components/HeroBackground';
+import PropTypes from 'prop-types';
 
 export const HomePage = () => {
   return (
     <MainLayout>
-      <HeroBackground />
+      <HeroBackground
+        title="Meet, Eat & Enjoy the true test"
+        des="Making a reservation at Délicious restaurant is easy and takes just a couple of minutes."
+        button="Our Menu"
+      />
       <Wrapper mt={15}>
         <Box mb={3}>
           <Typography variant={'h2'} align={'center'}>
