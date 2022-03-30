@@ -9,6 +9,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/menu" element={<HomePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>

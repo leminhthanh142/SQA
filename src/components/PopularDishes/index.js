@@ -20,7 +20,6 @@ const options = {
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 3500,
-  // arrows: false,
   nextArrow: <ArrowForwardIosIcon fontSize={'large'} sx={arrowStyle} />,
   prevArrow: <ArrowBackIosNewIcon fontSize={'large'} sx={arrowStyle} />
 };

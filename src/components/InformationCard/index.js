@@ -1,27 +1,10 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, styled } from '@mui/material';
 import PropTypes from 'prop-types';
-import { createStyles, makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    container: {
-      transition: 'all 0.6s',
-      padding: '47px 46px 36px',
-      border: '1px solid',
-      borderColor: '#e6dad8',
-      '&:hover': {
-        borderColor: '#ffffff',
-        boxShadow: '-5px 15px 25px 12px rgba(255,146,146,0.1)'
-      }
-    }
-  })
-);
 
 export const InformationCard = ({ icon, title, description }) => {
-  const classes = useStyles();
   return (
-    <Card elevation={0} className={classes.container} sx={{ borderRadius: '10px' }}>
+    <Container elevation={0}>
       <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
         {icon}
       </Box>
@@ -33,9 +16,21 @@ export const InformationCard = ({ icon, title, description }) => {
           {description}
         </Typography>
       </CardContent>
-    </Card>
+    </Container>
   );
 };
+
+const Container = styled(Card)(() => ({
+  transition: 'all 0.6s',
+  padding: '47px 46px 36px',
+  border: '1px solid',
+  borderColor: '#e6dad8',
+  borderRadius: '10px',
+  '&:hover': {
+    borderColor: '#ffffff',
+    boxShadow: '-5px 15px 25px 12px rgba(255,146,146,0.1)'
+  }
+}));
 
 InformationCard.propTypes = {
   icon: PropTypes.node,

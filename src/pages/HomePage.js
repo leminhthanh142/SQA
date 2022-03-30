@@ -6,7 +6,6 @@ import { Stack, Typography, Box, styled } from '@mui/material';
 import { BookTable } from '../components/bookTable/BookTable';
 import { PopularDishes } from '../components/PopularDishes';
 import { HeroBackground } from '../components/HeroBackground';
-import PropTypes from 'prop-types';
 
 export const HomePage = () => {
   return (
