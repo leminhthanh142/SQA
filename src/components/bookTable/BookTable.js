@@ -23,17 +23,26 @@ export const BookTable = () => {
   });
 
   const tableTypeSelect = useMemo(() => {
-    return ['2', '4', '6', '8'].map((item) => (
-      <MenuItem key={item} value={item}>
-        {item} people
-      </MenuItem>
-    ));
+    return [null, '2', '4', '6', '8'].map((item) => {
+      if (!item) {
+        return (
+          <MenuItem key={item} value={null}>
+            None
+          </MenuItem>
+        );
+      }
+      return (
+        <MenuItem key={item} value={item}>
+          {item} people
+        </MenuItem>
+      );
+    });
   }, []);
 
-  const handleFormValuesChange = (e) => {
+  const handleFormValuesChange = (name, newValue) => {
     setFormValues({
       ...formValues,
-      [e.target.name]: e.target.value
+      [name]: newValue
     });
   };
 
@@ -55,16 +64,18 @@ export const BookTable = () => {
             <FormLabel>
               <Typography>Number Of Guest</Typography>
             </FormLabel>
-            <OutlinedInput value={formValues.guestNo} onChange={handleFormValuesChange} />
+            <OutlinedInput
+              value={formValues.guestNo}
+              onChange={(e) => handleFormValuesChange('guestNo', e.target.value)}
+            />
           </FormControl>
           <FormControl fullWidth>
             <FormLabel>
               <Typography>Number Of Table</Typography>
             </FormLabel>
             <OutlinedInput
-              name="tableNo"
               value={formValues.tableNo}
-              onChange={handleFormValuesChange}
+              onChange={(e) => handleFormValuesChange('tableNo', e.target.value)}
             />
           </FormControl>
         </Stack>
@@ -73,13 +84,18 @@ export const BookTable = () => {
             <FormLabel>
               <Typography>Booking Time</Typography>
             </FormLabel>
-            <CustomDatePicker value={formValues.date} onChange={handleFormValuesChange} />
+            <CustomDatePicker
+              value={formValues.date}
+              onChange={(value) => handleFormValuesChange('date', value)}
+            />
           </FormControl>
           <FormControl fullWidth>
             <FormLabel>
               <Typography>Table Type</Typography>
             </FormLabel>
-            <Select value={formValues.tableType} onChange={handleFormValuesChange}>
+            <Select
+              value={formValues.tableType}
+              onChange={(e) => handleFormValuesChange('tableType', e.target.value)}>
               {tableTypeSelect}
             </Select>
           </FormControl>
@@ -88,7 +104,10 @@ export const BookTable = () => {
           <FormLabel>
             <Typography>Phone No.</Typography>
           </FormLabel>
-          <OutlinedInput value={formValues.phoneNo} onChange={handleFormValuesChange} />
+          <OutlinedInput
+            value={formValues.phoneNo}
+            onChange={(e) => handleFormValuesChange('phoneNo', e.target.value)}
+          />
         </FormControl>
         <FormControl fullWidth>
           <FormLabel>
@@ -98,7 +117,7 @@ export const BookTable = () => {
             multiline
             rows={3}
             value={formValues.message}
-            onChange={handleFormValuesChange}
+            onChange={(e) => handleFormValuesChange('message', e.target.value)}
           />
         </FormControl>
         <CustomButton padding={'16px 24px'}>Send Request</CustomButton>
