@@ -12,6 +12,8 @@ import {
 import { CustomDatePicker } from '../CustomDatePicker';
 import { CustomButton } from '../CustomButton';
 
+const tableTypes = [null, '2', '4', '6', '8'];
+
 export const BookTable = () => {
   const [formValues, setFormValues] = useState({
     guestNo: null,
@@ -23,7 +25,7 @@ export const BookTable = () => {
   });
 
   const tableTypeSelect = useMemo(() => {
-    return [null, '2', '4', '6', '8'].map((item) => {
+    return tableTypes.map((item) => {
       if (!item) {
         return (
           <MenuItem key={item} value={null}>
