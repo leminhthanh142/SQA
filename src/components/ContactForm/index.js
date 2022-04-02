@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Stack,
-  Box,
-  Typography,
-  OutlinedInput,
-  FormControl,
-  FormLabel
-} from '@mui/material';
+import { Stack, Box, Typography, OutlinedInput, FormControl, FormLabel } from '@mui/material';
 import { CustomButton } from '../CustomButton';
 import PropTypes from 'prop-types';
 import { Home, LocalPhone, EmailOutlined } from '@mui/icons-material';
