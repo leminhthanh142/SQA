@@ -3,9 +3,9 @@ import { Button, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 
-export const CustomButton = ({ width, children, variant = 'contained', padding }) => {
+export const CustomButton = ({ width, children, variant = 'contained', padding, onClick }) => {
   return (
-    <StyledButton sx={{ width, padding }} variant={variant}>
+    <StyledButton sx={{ width, padding }} variant={variant} onClick={onClick}>
       <Typography sx={{ color: '#ffffff' }}>{children}</Typography>
     </StyledButton>
   );
@@ -23,5 +23,6 @@ CustomButton.propTypes = {
   width: PropTypes.number,
   padding: PropTypes.string,
   children: PropTypes.node,
+  onClick: PropTypes.func,
   variant: PropTypes.oneOf(['text', 'outlined', 'contained'])
 };

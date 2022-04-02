@@ -38,7 +38,7 @@ export const HomePage = () => {
         </Stack>
       </Wrapper>
       <PopularDishes />
-      <Wrapper mt={15}>
+      <Wrapper>
         <BookTable />
       </Wrapper>
     </MainLayout>
@@ -47,6 +47,6 @@ export const HomePage = () => {
 
 export const Wrapper = styled(Box)({
   maxWidth: 1320,
-  marginLeft: 'auto',
-  marginRight: 'auto'
+  margin: '0 auto',
+  paddingTop: '120px'
 });

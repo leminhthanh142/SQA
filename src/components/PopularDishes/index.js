@@ -4,6 +4,7 @@ import { customAxios } from '../../customAxios';
 import { FoodCard } from '../FoodCard';
 import Slider from 'react-slick';
 import { Wrapper } from '../../pages/HomePage';
+import { dishesType } from '../../type/index';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import 'slick-carousel/slick/slick.css';
@@ -26,34 +27,12 @@ const options = {
 
 export const PopularDishes = () => {
   const [popularDishes, setPopularDishes] = useState([]);
-  const [dishesType] = useState([
-    {
-      type: 'breakFast',
-      name: 'Breakfast'
-    },
-    {
-      type: 'lunches',
-      name: 'Lunches'
-    },
-    {
-      type: 'dinner',
-      name: 'Dinner'
-    },
-    {
-      type: 'drink',
-      name: 'Drink'
-    },
-    {
-      type: 'fastFood',
-      name: 'Fastfood'
-    }
-  ]);
-
   const [selectedType, setSelectedType] = useState('breakFast');
   const sliderRef = useRef();
-  const handleChangeDishesType = (type) => {
+  const handleChangeDishesType = useCallback((type) => {
     setSelectedType(type);
-  };
+    fetchFood();
+  }, []);
 
   useEffect(() => {
     fetchFood();

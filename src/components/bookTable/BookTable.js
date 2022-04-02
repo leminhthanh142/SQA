@@ -11,16 +11,17 @@ import {
 } from '@mui/material';
 import { CustomDatePicker } from '../CustomDatePicker';
 import { CustomButton } from '../CustomButton';
+import PropTypes from 'prop-types';
 
 const tableTypes = [null, '2', '4', '6', '8'];
 
-export const BookTable = () => {
+export const BookTable = ({ onSubmit }) => {
   const [formValues, setFormValues] = useState({
     guestNo: null,
     tableNo: null,
     date: new Date(),
     tableType: null,
-    phoneNo: '',
+    phoneNumber: '',
     message: ''
   });
 
@@ -49,7 +50,7 @@ export const BookTable = () => {
   };
 
   return (
-    <Box maxWidth={'70%'} margin={'0 auto'}>
+    <Box maxWidth={'70%'} margin={'0 auto'} id={'booking'}>
       <Box mb={3}>
         <Typography variant="h2" sx={{ fontWeight: 'bold' }} align={'center'}>
           Book a table
@@ -107,8 +108,8 @@ export const BookTable = () => {
             <Typography>Phone No.</Typography>
           </FormLabel>
           <OutlinedInput
-            value={formValues.phoneNo}
-            onChange={(e) => handleFormValuesChange('phoneNo', e.target.value)}
+            value={formValues.phoneNumber}
+            onChange={(e) => handleFormValuesChange('phoneNumber', e.target.value)}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -122,8 +123,14 @@ export const BookTable = () => {
             onChange={(e) => handleFormValuesChange('message', e.target.value)}
           />
         </FormControl>
-        <CustomButton padding={'16px 24px'}>Send Request</CustomButton>
+        <CustomButton padding={'16px 24px'} onClick={() => onSubmit(formValues)}>
+          Send Request
+        </CustomButton>
       </Stack>
     </Box>
   );
+};
+
+BookTable.propTypes = {
+  onSubmit: PropTypes.func
 };

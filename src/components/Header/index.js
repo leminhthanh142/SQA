@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Chip } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
-import { CustomButton } from './CustomButton';
+import { CustomButton } from '../CustomButton';
 import { styled } from '@mui/system';
+import { useOrders } from '../../context/orders';
 
 export const Header = () => {
   const [isShrink, setIsShrink] = useState(false);
+  const { orders } = useOrders();
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -35,11 +37,14 @@ export const Header = () => {
         <Link to={'/menu'}>Menu</Link>
         <Link to={'/contact'}>Contact</Link>
       </Stack>
-      <Box>
-        <Link to={'/booking'}>Book a Table</Link>
+      <Box position={'relative'}>
+        <a id={'booking-btn'} href={'#booking'}>
+          Book a Table
+        </a>
         <CustomButton variant={'contained'} width={130}>
           <ShoppingCartIcon />
         </CustomButton>
+        {!!orders.length && <StyledTag label={orders.length} />}
       </Box>
     </Container>
   );
@@ -62,7 +67,7 @@ const Container = styled(Box)(({ isShrink }) => ({
   '& a': {
     position: 'relative',
     padding: '28px 5px',
-    color: '#4d312c',
+    color: isShrink ? '#4d312c' : '#ffffff',
     fontWeight: 700,
     transition: 'all 0.4s ease-out',
     overflow: 'hidden',
@@ -84,5 +89,18 @@ const Container = styled(Box)(({ isShrink }) => ({
         left: 4
       }
     }
+  },
+  '& #booking-btn': {
+    marginRight: 24
   }
 }));
+
+const StyledTag = styled(Chip)({
+  position: 'absolute',
+  right: 0,
+  top: -10,
+  background: '#fc2b2b',
+  '& span': {
+    color: '#ffffff'
+  }
+});
