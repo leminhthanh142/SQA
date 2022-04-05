@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const OrdersContext = React.createContext([]);
@@ -29,10 +29,41 @@ export const OrdersContextProvider = ({ children }) => {
     window.localStorage.setItem('orders', JSON.stringify(orders));
   };
 
+  const handleRemoveOrder = (product) => {
+    if (product.quantity <= 1) {
+      const newOrders = orders.filter((order) => order.id !== product.id);
+      setOrders(newOrders);
+      return;
+    }
+    setOrders(
+      orders.map((order) => {
+        if (order.id === product.id) {
+          return {
+            ...order,
+            quantity: order.quantity - 1
+          };
+        }
+        return order;
+      })
+    );
+  };
+
+  const newOrders = useMemo(
+    () =>
+      orders.map((order) => {
+        return {
+          ...order,
+          totalPrice: order.price * order.quantity
+        };
+      }),
+    [orders]
+  );
+
   const values = {
-    orders,
+    orders: newOrders,
     setOrders,
-    onAddOrder: handleAddOrder
+    onAddOrder: handleAddOrder,
+    onRemoveOrder: handleRemoveOrder
   };
   return <OrdersContext.Provider value={values}>{children}</OrdersContext.Provider>;
 };
