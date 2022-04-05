@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Stack, Chip } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CustomButton } from '../CustomButton';
 import { styled } from '@mui/system';
 import { useOrders } from '../../context/orders';
 
 export const Header = () => {
   const [isShrink, setIsShrink] = useState(false);
+  const navigate = useNavigate();
   const { orders } = useOrders();
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export const Header = () => {
     <Container isShrink={isShrink}>
       <Stack direction={'row'} spacing={4}>
         <Box mr={3}>
-          <img src="/images/sqa-logo.webp" alt="logo" />
+          <img src={isShrink ? '/images/sqa-logo.webp' : '/images/logo.png'} alt="logo" />
         </Box>
         <Link to={'/'}>Home</Link>
         <Link to={'/menu'}>Menu</Link>
@@ -41,7 +42,7 @@ export const Header = () => {
         <a id={'booking-btn'} href={'#booking'}>
           Book a Table
         </a>
-        <CustomButton variant={'contained'} width={130}>
+        <CustomButton variant={'contained'} width={130} onClick={() => navigate('/orders')}>
           <ShoppingCartIcon />
         </CustomButton>
         {!!orders.length && <StyledTag label={orders.length} />}

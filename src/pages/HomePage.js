@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { MainLayout } from '../components/layout/MainLayout';
 import { informationCard } from '../dummyData';
 import { InformationCard } from '../components/InformationCard';
@@ -6,8 +6,20 @@ import { Stack, Typography, Box, styled } from '@mui/material';
 import { BookTable } from '../components/bookTable/BookTable';
 import { PopularDishes } from '../components/PopularDishes';
 import { HeroBackground } from '../components/HeroBackground';
+import { customAxios } from '../customAxios';
+import { useFlash } from '../context/flash';
 
 export const HomePage = () => {
+  const { setFlash } = useFlash();
+  const handleSubmitBooking = useCallback(async (values) => {
+    try {
+      await customAxios.post('');
+      setFlash({ type: 'success', message: 'Book table successfully' });
+    } catch (err) {
+      setFlash({ type: 'error', message: 'Book table successfully' });
+    }
+  }, []);
+
   return (
     <MainLayout>
       <HeroBackground
@@ -39,7 +51,7 @@ export const HomePage = () => {
       </Wrapper>
       <PopularDishes />
       <Wrapper>
-        <BookTable />
+        <BookTable onSubmit={handleSubmitBooking} />
       </Wrapper>
     </MainLayout>
   );

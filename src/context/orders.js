@@ -14,7 +14,7 @@ export const OrdersContextProvider = ({ children }) => {
     const orders = window.localStorage.getItem('orders');
     setOrders(orders ? JSON.parse(orders) : []);
   }, []);
-  console.log(orders);
+
   const handleAddOrder = (product) => {
     const existProduct = orders.find((order) => order.id === product.id);
 

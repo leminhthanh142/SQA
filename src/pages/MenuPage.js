@@ -18,6 +18,15 @@ export const MenuPage = () => {
   const { orders, onAddOrder } = useOrders();
   const { setFlash } = useFlash();
 
+  const handleSubmitBooking = useCallback(async (values) => {
+    try {
+      await customAxios.post('');
+      setFlash({ type: 'success', message: 'Book table successfully' });
+    } catch (err) {
+      setFlash({ type: 'error', message: 'Book table successfully' });
+    }
+  }, []);
+
   useEffect(() => {
     fetchFood();
   }, []);
@@ -82,7 +91,7 @@ export const MenuPage = () => {
         </Grid>
       </Wrapper>
       <Wrapper>
-        <BookTable />
+        <BookTable onSubmit={handleSubmitBooking} />
       </Wrapper>
     </MainLayout>
   );
