@@ -20,3 +20,13 @@ export const dishesType = [
     name: 'Fastfood'
   }
 ];
+
+export const ShippingType = {
+  Courier: 1,
+  Pickup: 0
+};
+
+export const PaymentType = {
+  Online: 1,
+  Delivery: 0
+};
