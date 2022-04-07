@@ -5,7 +5,8 @@ import {
   styled,
   Box,
   StepConnector,
-  stepConnectorClasses
+  stepConnectorClasses,
+  stepLabelClasses
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
@@ -58,13 +59,17 @@ const CustomStepIcon = ({ active, completed, icon }) => {
 
 const StyledStepLabel = ({ active, completed, children, ...others }) => {
   const sx = {
-    '& .Mui-active': {
-      color: '#fe5f41',
-      fontWeight: 700
-    },
-    '& .MuiStepLabel-label': {
+    [`& .${stepLabelClasses.label}`]: {
       color: '#afb1bd',
-      fontWeight: 500
+      fontWeight: 500,
+      [`&.${stepLabelClasses.completed}`]: {
+        color: '#fe5f41',
+        fontWeight: 700
+      },
+      [`&.${stepLabelClasses.active}`]: {
+        color: '#fe5f41',
+        fontWeight: 700
+      }
     }
   };
   return (
