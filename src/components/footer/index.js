@@ -1,17 +1,11 @@
 import React from 'react';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
-    <Box
-      style={{
-        height: '250px',
-        marginTop: '40px',
-        padding: '0px',
-        backgroundColor: 'rgb(255,244,242)'
-      }}>
-      <Container sx={{ pt: 3 }}>
+    <Wrapper>
+      <StyledContainer>
         <Stack direction={'row'}>
           <Stack direction={'column'} width={'33%'}>
             <Box sx={{ pb: 4 }}>
@@ -43,7 +37,16 @@ export const Footer = () => {
             </Typography>
           </Stack>
         </Stack>
-      </Container>
-    </Box>
+      </StyledContainer>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled(Box)({
+  marginTop: '120px',
+  backgroundColor: 'rgb(255,244,242)'
+});
+
+const StyledContainer = styled(Container)({
+  padding: '40px 0'
+});

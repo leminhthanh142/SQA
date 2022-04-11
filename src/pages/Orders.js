@@ -21,6 +21,7 @@ import { ProductionQuantityLimits } from '@mui/icons-material';
 import { RightArrow } from '../components/RightArrow';
 import { LeftArrow } from '../components/LeftArrow';
 import { PaymentType, ShippingType } from '../type';
+import { useNavigate } from 'react-router-dom';
 
 const labels = ['Contacts', 'Shipping', 'Payment'];
 const creditCards = [
@@ -64,6 +65,7 @@ const onlineGateWays = [
 ];
 
 export const OrdersPage = () => {
+  const navigate = useNavigate();
   const { orders, onAddOrder, onRemoveOrder } = useOrders();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingType, setShippingType] = useState(ShippingType.Courier);
@@ -218,6 +220,22 @@ export const OrdersPage = () => {
     </Box>
   );
 
+  const completeForm = (
+    <Box>
+      <Stack spacing={3} justifyContent={'flex-start'} sx={{ pl: 1 }}>
+        <StyledTitle variant={'body2'}>Checkout complete!</StyledTitle>
+        <StyledTitle variant={'body2'}>Thank you for your orders...</StyledTitle>
+        <StyledBackButton
+          disableRipple
+          variant={'outlined'}
+          startIcon={<LeftArrow />}
+          onClick={() => navigate('/')}>
+          Come back homepage
+        </StyledBackButton>
+      </Stack>
+    </Box>
+  );
+
   if (!orders.length) {
     return (
       <MainLayout>
@@ -252,6 +270,7 @@ export const OrdersPage = () => {
             {activeStep === 1 && shippingForm}
             {activeStep === 2 && paymentForm}
             {activeStep !== 3 && navigationButtons()}
+            {activeStep === 3 && completeForm}
           </Box>
           <StyledPaper elevation={0}>
             <Typography variant={'body2'}>Order total ({orders.length})</Typography>

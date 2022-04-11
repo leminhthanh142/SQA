@@ -16,7 +16,7 @@ export const FoodMenuCard = ({ name, description, price, image, onOrder }) => {
         {description}
       </Typography>
       <StyledTypography align={'center'} sx={{ mb: 4 }} onClick={onOrder}>
-        Add to carts
+        Add to cart
       </StyledTypography>
     </Container>
   );

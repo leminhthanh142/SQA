@@ -48,7 +48,7 @@ export const MenuPage = () => {
   const handleAddOrder = useCallback(
     (product) => {
       onAddOrder(product);
-      setFlash({ type: 'success', message: 'Add food to carts successfully!' });
+      setFlash({ type: 'success', message: 'Add food to cart successfully!' });
     },
     [orders]
   );
