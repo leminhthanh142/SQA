@@ -23,12 +23,52 @@ import { LeftArrow } from '../components/LeftArrow';
 import { PaymentType, ShippingType } from '../type';
 
 const labels = ['Contacts', 'Shipping', 'Payment'];
+const creditCards = [
+  {
+    id: 1,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-card-visa_xbmobu.png'
+  },
+  {
+    id: 2,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-card-master_hk7o4r.png'
+  },
+  {
+    id: 3,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-card-american_wfurcp.png'
+  },
+  {
+    id: 4,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-card-jcb_qb5auz.png'
+  },
+  {
+    id: 5,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-card-discover_jhud7f.png'
+  }
+];
+const onlineGateWays = [
+  {
+    id: 6,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-gateway-paypal_hp0gag.png'
+  },
+  {
+    id: 7,
+    image:
+      'https://res.cloudinary.com/didlxgowc/image/upload/f_auto,c_limit,w_1920,q_auto/payment-card-stripe_odvihl.png'
+  }
+];
 
 export const OrdersPage = () => {
   const { orders, onAddOrder, onRemoveOrder } = useOrders();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingType, setShippingType] = useState(ShippingType.Courier);
   const [paymentType, setPaymentType] = useState(PaymentType.Online);
+  const [selectedPaymentCard, setSelectedPaymentCard] = useState();
 
   const handleChangeShippingType = (shippingType) => {
     setShippingType(shippingType);
@@ -45,6 +85,10 @@ export const OrdersPage = () => {
   const handleBackStep = () => {
     if (activeStep === 0) return;
     setActiveStep(activeStep - 1);
+  };
+
+  const handleSelectPaymentCard = (id) => {
+    setSelectedPaymentCard(id);
   };
 
   const navigationButtons = () => {
@@ -116,6 +160,37 @@ export const OrdersPage = () => {
     </Box>
   );
 
+  const onlinePaymentForm = (
+    <>
+      <StyledTitle variant={'body1'}>Credit Cards</StyledTitle>
+      <CardContainer>
+        <Box sx={{ margin: '1rem 0' }} display={'flex'} flexWrap={'wrap'}>
+          {creditCards.map((card, i) => (
+            <PaymentCard
+              key={i}
+              onClick={() => handleSelectPaymentCard(card.id)}
+              isSelected={card.id === selectedPaymentCard}>
+              <img src={card.image} alt={''} />
+            </PaymentCard>
+          ))}
+        </Box>
+      </CardContainer>
+      <CardContainer>
+        <StyledTitle variant={'body1'}>Online payment gateways</StyledTitle>
+        <Box sx={{ margin: '1rem 0' }} display={'flex'} flexWrap={'wrap'}>
+          {onlineGateWays.map((card, i) => (
+            <PaymentCard
+              key={i}
+              onClick={() => handleSelectPaymentCard(card.id)}
+              isSelected={card.id === selectedPaymentCard}>
+              <img src={card.image} alt={''} />
+            </PaymentCard>
+          ))}
+        </Box>
+      </CardContainer>
+    </>
+  );
+
   const paymentForm = (
     <Box>
       <Box ml={1}>
@@ -138,6 +213,7 @@ export const OrdersPage = () => {
             />
           </RadioGroup>
         </Box>
+        {paymentType === PaymentType.Online && onlinePaymentForm}
       </Box>
     </Box>
   );
@@ -175,7 +251,7 @@ export const OrdersPage = () => {
             {activeStep === 0 && informationForm}
             {activeStep === 1 && shippingForm}
             {activeStep === 2 && paymentForm}
-            {navigationButtons()}
+            {activeStep !== 3 && navigationButtons()}
           </Box>
           <StyledPaper elevation={0}>
             <Typography variant={'body2'}>Order total ({orders.length})</Typography>
@@ -266,4 +342,25 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ isSelected }) => ({
   marginBottom: 16,
   height: 60,
   borderRadius: 4
+}));
+
+const CardContainer = styled(Box)({
+  margin: '2rem 0',
+  width: 480
+});
+
+const PaymentCard = styled(Box)(({ isSelected }) => ({
+  cursor: 'pointer',
+  border: '1px solid',
+  borderColor: isSelected ? '#fe5f41' : '#cecece',
+  color: isSelected ? '#fe5f41' : '#cecece',
+  borderRadius: 5,
+  margin: '0 8px 8px 0',
+  transition: 'all 0.3s',
+  '&:hover': {
+    borderColor: '#fe5f41'
+  },
+  img: {
+    width: 150
+  }
 }));

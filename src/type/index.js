@@ -30,3 +30,8 @@ export const PaymentType = {
   Online: 1,
   Delivery: 0
 };
+
+export const Gender = {
+  Male: 0,
+  Female: 1
+};
