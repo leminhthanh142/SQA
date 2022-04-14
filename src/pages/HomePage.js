@@ -8,12 +8,28 @@ import { PopularDishes } from '../components/PopularDishes';
 import { HeroBackground } from '../components/HeroBackground';
 import { customAxios } from '../customAxios';
 import { useFlash } from '../context/flash';
+import moment from 'moment';
 
 export const HomePage = () => {
   const { setFlash } = useFlash();
   const handleSubmitBooking = useCallback(async (values) => {
+    const appointmentTime = moment(values.date).format('YYYY-MM-DD');
+    const appointmentHour = moment(values.date).format('hh:mm');
+
+    const params = {
+      table: [{ tableType: values.tableType, numberOfTable: values.tableNo }],
+      clientName: values.clientName,
+      phoneNumber: values.phoneNumber,
+      note: values.note,
+      appointmentHour,
+      appointmentTime,
+      address: values.address,
+      date: new Date()
+    };
     try {
-      await customAxios.post('');
+      await customAxios.post('/reservation', {
+        ...params
+      });
       setFlash({ type: 'success', message: 'Book table successfully' });
     } catch (err) {
       setFlash({ type: 'error', message: 'Book table successfully' });

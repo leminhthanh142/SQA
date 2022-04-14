@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export const customAxios = axios.create({
-  baseURL: 'https://6232042f59070d92734183e5.mockapi.io/sqa-dummy-data',
+  baseURL: 'http://localhost:8080/api',
   timeout: 10000
 });

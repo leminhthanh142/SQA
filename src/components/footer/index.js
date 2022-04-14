@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <Wrapper>
       <StyledContainer>
-        <Stack direction={'row'}>
+        <Stack direction={'row'} spacing={15}>
           <Stack direction={'column'} width={'33%'}>
             <Box sx={{ pb: 4 }}>
               <img src="/images/sqa-logo.webp" />
@@ -16,7 +16,7 @@ export const Footer = () => {
               creepeth morning laboris nisi ufsit aliquip.
             </Typography>
           </Stack>
-          <Stack direction={'column'} spacing={4} textAlign={'center'} width={'25%'}>
+          <Stack direction={'column'} spacing={4}>
             <Typography variant={'h6'} color={'black'} sx={{ pb: 2 }}>
               Quick Links
             </Typography>

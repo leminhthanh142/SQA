@@ -14,16 +14,20 @@ import { CustomButton } from '../CustomButton';
 import PropTypes from 'prop-types';
 
 const tableTypes = [null, '2', '4', '6', '8'];
+const numberPattern = '[0-9]';
 
 export const BookTable = ({ onSubmit }) => {
   const [formValues, setFormValues] = useState({
+    clientName: '',
+    address: '',
     guestNo: null,
     tableNo: null,
     date: new Date(),
     tableType: null,
     phoneNumber: '',
-    message: ''
+    note: ''
   });
+  const [erros, setErros] = useState();
 
   const tableTypeSelect = useMemo(() => {
     return tableTypes.map((item) => {
@@ -62,6 +66,24 @@ export const BookTable = ({ onSubmit }) => {
         </Typography>
       </Box>
       <Stack spacing={3}>
+        <FormControl fullWidth>
+          <FormLabel>
+            <Typography>Address</Typography>
+          </FormLabel>
+          <OutlinedInput
+            value={formValues.address}
+            onChange={(e) => handleFormValuesChange('address', e.target.value)}
+          />
+        </FormControl>
+        <FormControl fullWidth>
+          <FormLabel>
+            <Typography>Name</Typography>
+          </FormLabel>
+          <OutlinedInput
+            value={formValues.clientName}
+            onChange={(e) => handleFormValuesChange('clientName', e.target.value)}
+          />
+        </FormControl>
         <Stack direction={'row'} spacing={2}>
           <FormControl fullWidth>
             <FormLabel>
@@ -119,8 +141,8 @@ export const BookTable = ({ onSubmit }) => {
           <OutlinedInput
             multiline
             rows={3}
-            value={formValues.message}
-            onChange={(e) => handleFormValuesChange('message', e.target.value)}
+            value={formValues.note}
+            onChange={(e) => handleFormValuesChange('note', e.target.value)}
           />
         </FormControl>
         <CustomButton padding={'16px 24px'} onClick={() => onSubmit(formValues)}>
