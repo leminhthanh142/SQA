@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Stack, styled, Typography, Grid } from '@mui/material';
 
-import { dishesType } from '../type/index';
+import { Categories, dishesType } from '../type/index';
 import { customAxios } from '../customAxios';
 
 import { FoodMenuCard } from '../components/FoodMenuCard';
@@ -11,39 +11,54 @@ import { BookTable } from '../components/bookTable/BookTable';
 
 import { useOrders } from '../context/orders';
 import { useFlash } from '../context/flash';
+import moment from 'moment';
 
 export const MenuPage = () => {
   const [products, setProducts] = useState([]);
-  const [selectedType, setSelectedType] = useState('breakFast');
+  const [selectedType, setSelectedType] = useState(Categories.BreakFast);
   const { orders, onAddOrder } = useOrders();
   const { setFlash } = useFlash();
 
   const handleSubmitBooking = useCallback(async (values) => {
+    const appointmentTime = moment(values.date).format('YYYY-MM-DD');
+    const appointmentHour = moment(values.date).format('hh:mm');
+
+    const params = {
+      table: [{ tableType: values.tableType, numberOfTable: values.tableNo }],
+      clientName: values.clientName,
+      phoneNumber: values.phoneNumber,
+      note: values.note,
+      appointmentHour,
+      appointmentTime,
+      address: values.address,
+      date: new Date()
+    };
     try {
-      await customAxios.post('');
+      await customAxios.post('/reservation', {
+        ...params
+      });
       setFlash({ type: 'success', message: 'Book table successfully' });
     } catch (err) {
-      setFlash({ type: 'error', message: 'Book table successfully' });
+      setFlash({ type: 'error', message: 'Something wrong, please try again later!' });
     }
   }, []);
 
+  const handleChangeDishesType = (type) => {
+    setSelectedType(type);
+  };
+
   useEffect(() => {
     fetchFood();
-  }, []);
+  }, [selectedType]);
 
   const fetchFood = useCallback(async () => {
     try {
-      const res = await customAxios.get('/popular-dishes');
+      const res = await customAxios.get(`/products/category/${selectedType}`);
       setProducts(res.data);
     } catch (err) {
       throw new Error(err);
     }
-  }, []);
-
-  const handleChangeDishesType = useCallback((type) => {
-    setSelectedType(type);
-    fetchFood();
-  }, []);
+  }, [selectedType]);
 
   const handleAddOrder = useCallback(
     (product) => {
@@ -78,11 +93,11 @@ export const MenuPage = () => {
         </Stack>
         <Grid spacing={3} container>
           {products.map((product) => (
-            <Grid item key={product.id} xs={4}>
+            <Grid item key={product.productId} xs={4}>
               <FoodMenuCard
                 name={product.name}
                 description={product.description}
-                image={product.image}
+                image={product.imageName}
                 price={product.price}
                 onOrder={() => handleAddOrder(product)}
               />

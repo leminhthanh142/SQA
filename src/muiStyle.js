@@ -42,5 +42,12 @@ export const theme = createTheme({
       fontFamily: `"Raleway",sans-serif`,
       fontSize: 20
     }
+  },
+  MuiFormLabel: {
+    asterisk: {
+      marginLeft: 10,
+      color: '#db3131',
+      fontWeight: 700
+    }
   }
 });

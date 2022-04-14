@@ -12,6 +12,7 @@ import moment from 'moment';
 
 export const HomePage = () => {
   const { setFlash } = useFlash();
+
   const handleSubmitBooking = useCallback(async (values) => {
     const appointmentTime = moment(values.date).format('YYYY-MM-DD');
     const appointmentHour = moment(values.date).format('hh:mm');
@@ -32,7 +33,7 @@ export const HomePage = () => {
       });
       setFlash({ type: 'success', message: 'Book table successfully' });
     } catch (err) {
-      setFlash({ type: 'error', message: 'Book table successfully' });
+      setFlash({ type: 'error', message: 'Something wrong, please try again later!' });
     }
   }, []);
 

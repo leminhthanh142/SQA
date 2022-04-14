@@ -9,6 +9,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { Categories } from '../../type/index';
 
 const arrowStyle = {
   color: 'rgba(255,255,255,0.53)',
@@ -27,25 +28,25 @@ const options = {
 
 export const PopularDishes = () => {
   const [popularDishes, setPopularDishes] = useState([]);
-  const [selectedType, setSelectedType] = useState('breakFast');
+  const [selectedType, setSelectedType] = useState(Categories.BreakFast);
   const sliderRef = useRef();
-  const handleChangeDishesType = useCallback((type) => {
+
+  const handleChangeDishesType = (type) => {
     setSelectedType(type);
-    fetchFood();
-  }, []);
+  };
 
   useEffect(() => {
     fetchFood();
-  }, []);
+  }, [selectedType]);
 
   const fetchFood = useCallback(async () => {
     try {
-      const res = await customAxios.get('/popular-dishes');
+      const res = await customAxios.get(`/products/category/${selectedType}`);
       setPopularDishes(res.data);
     } catch (err) {
       throw new Error(err);
     }
-  }, []);
+  }, [selectedType]);
 
   return (
     <Container mt={15}>

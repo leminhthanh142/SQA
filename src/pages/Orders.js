@@ -10,7 +10,8 @@ import {
   FormControlLabel,
   Radio,
   Button,
-  FormControl
+  FormControl,
+  FormHelperText
 } from '@mui/material';
 import { useOrders } from '../context/orders';
 import { MainLayout } from '../components/layout/MainLayout';
@@ -20,8 +21,10 @@ import { OrderCard } from '../components/OrderCard';
 import { ProductionQuantityLimits } from '@mui/icons-material';
 import { RightArrow } from '../components/RightArrow';
 import { LeftArrow } from '../components/LeftArrow';
-import { PaymentType, ShippingType } from '../type';
+import { digits, PaymentType, ShippingType } from '../type';
 import { useNavigate } from 'react-router-dom';
+import { useFlash } from '../context/flash';
+import { customAxios } from '../customAxios';
 
 const labels = ['Contacts', 'Shipping', 'Payment'];
 const creditCards = [
@@ -66,11 +69,77 @@ const onlineGateWays = [
 
 export const OrdersPage = () => {
   const navigate = useNavigate();
-  const { orders, onAddOrder, onRemoveOrder } = useOrders();
+  const { setFlash } = useFlash();
+  const { orders, onAddOrder, onRemoveOrder, setOrders } = useOrders();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingType, setShippingType] = useState(ShippingType.Courier);
   const [paymentType, setPaymentType] = useState(PaymentType.Online);
   const [selectedPaymentCard, setSelectedPaymentCard] = useState();
+  const [userName, setUserName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [address, setAddress] = useState('');
+
+  const handleResetOrders = () => {
+    setOrders([]);
+  };
+  const isValid = () => {
+    if (activeStep === 1) {
+      return !!address;
+    }
+    return !!userName && !!phoneNumber && !phoneNumberError;
+  };
+
+  const handleChangeUserName = (e) => {
+    setUserName(e.target.value);
+  };
+
+  const handleChangePhoneNumber = (e) => {
+    setPhoneNumber(e.target.value);
+    validatePhoneNumber(e);
+  };
+
+  const validatePhoneNumber = (e) => {
+    const value = e.target.value;
+    if (!digits.test(value) && value.length) {
+      setPhoneNumberError('Invalid phone number!');
+      return;
+    }
+    setPhoneNumberError('');
+  };
+
+  const handleChangeAddress = (e) => {
+    setAddress(e.target.value);
+  };
+
+  const handleSubmitOrder = async () => {
+    try {
+      const promiseAll = [];
+      const userInformationParams = {
+        userName,
+        address,
+        phoneNo: phoneNumber,
+        date: new Date()
+      };
+      orders.forEach((order) =>
+        promiseAll.push(
+          customAxios.post('/carts/add', {
+            ...userInformationParams,
+            productId: Number(order.productId),
+            quantity: order.quantity,
+            total: order.total
+          })
+        )
+      );
+      await Promise.all(promiseAll);
+      setFlash({
+        type: 'success',
+        message: 'Make order successfully!'
+      });
+    } catch (err) {
+      setFlash({ type: 'error', message: 'Something wrong, please try again later!' });
+    }
+  };
 
   const handleChangeShippingType = (shippingType) => {
     setShippingType(shippingType);
@@ -107,7 +176,16 @@ export const OrdersPage = () => {
           onClick={handleBackStep}>
           Back Step
         </StyledBackButton>
-        <StyledNextButton variant={'contained'} endIcon={<RightArrow />} onClick={handleNextStep}>
+        <StyledNextButton
+          variant={'contained'}
+          endIcon={<RightArrow />}
+          disabled={!isValid()}
+          onClick={() => {
+            handleNextStep();
+            if (activeStep === 2) {
+              handleSubmitOrder();
+            }
+          }}>
           {nextBtn}
         </StyledNextButton>
       </Stack>
@@ -119,10 +197,19 @@ export const OrdersPage = () => {
       <StyledTitle variant={'body1'}>Fill in your information</StyledTitle>
       <Stack direction={'row'} spacing={2} mt={2} mb={2}>
         <FormControl fullWidth>
-          <OutlinedInput placeholder={'Full name'} />
+          <OutlinedInput
+            value={userName}
+            onChange={handleChangeUserName}
+            placeholder={'Full name'}
+          />
         </FormControl>
-        <FormControl fullWidth>
-          <OutlinedInput placeholder={'Phone number'} />
+        <FormControl fullWidth error={!!phoneNumberError}>
+          <OutlinedInput
+            value={phoneNumber}
+            onChange={handleChangePhoneNumber}
+            placeholder={'Phone number'}
+          />
+          <FormHelperText sx={{ ml: 0 }}>{phoneNumberError}</FormHelperText>
         </FormControl>
       </Stack>
       <RadioGroup defaultValue="female">
@@ -156,7 +243,7 @@ export const OrdersPage = () => {
         </Box>
         <StyledTitle variant={'body1'}>Delivery Address</StyledTitle>
         <FormControl fullWidth sx={{ mt: 2 }}>
-          <OutlinedInput placeholder={'Adress'} />
+          <OutlinedInput value={address} onChange={handleChangeAddress} placeholder={'Adress'} />
         </FormControl>
       </Box>
     </Box>
@@ -229,7 +316,10 @@ export const OrdersPage = () => {
           disableRipple
           variant={'outlined'}
           startIcon={<LeftArrow />}
-          onClick={() => navigate('/')}>
+          onClick={() => {
+            navigate('/');
+            handleResetOrders();
+          }}>
           Come back homepage
         </StyledBackButton>
       </Stack>
@@ -278,8 +368,8 @@ export const OrdersPage = () => {
               <Stack spacing={2} mt={3}>
                 {orders.map((order) => (
                   <OrderCard
-                    key={order.id}
-                    image={order.image}
+                    key={order.productId}
+                    image={order.imageName}
                     name={order.name}
                     price={order.price}
                     quantity={order.quantity}

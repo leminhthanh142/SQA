@@ -16,11 +16,13 @@ export const OrdersContextProvider = ({ children }) => {
   }, []);
 
   const handleAddOrder = (product) => {
-    const existProduct = orders.find((order) => order.id === product.id);
+    const existProduct = orders.find((order) => order.productId === product.productId);
 
     if (existProduct) {
       const newOrders = orders.map((order) =>
-        order.id === product.id ? { ...existProduct, quantity: existProduct.quantity + 1 } : order
+        order.productId === product.productId
+          ? { ...existProduct, quantity: existProduct.quantity + 1 }
+          : order
       );
       setOrders(newOrders);
       return;
@@ -31,13 +33,13 @@ export const OrdersContextProvider = ({ children }) => {
 
   const handleRemoveOrder = (product) => {
     if (product.quantity <= 1) {
-      const newOrders = orders.filter((order) => order.id !== product.id);
+      const newOrders = orders.filter((order) => order.productId !== product.productId);
       setOrders(newOrders);
       return;
     }
     setOrders(
       orders.map((order) => {
-        if (order.id === product.id) {
+        if (order.productId === product.productId) {
           return {
             ...order,
             quantity: order.quantity - 1

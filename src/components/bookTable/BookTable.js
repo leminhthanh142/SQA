@@ -7,14 +7,15 @@ import {
   OutlinedInput,
   MenuItem,
   FormControl,
-  FormLabel
+  FormLabel,
+  FormHelperText
 } from '@mui/material';
 import { CustomDatePicker } from '../CustomDatePicker';
 import { CustomButton } from '../CustomButton';
 import PropTypes from 'prop-types';
+import { digits } from '../../type';
 
 const tableTypes = [null, '2', '4', '6', '8'];
-const numberPattern = '[0-9]';
 
 export const BookTable = ({ onSubmit }) => {
   const [formValues, setFormValues] = useState({
@@ -27,7 +28,40 @@ export const BookTable = ({ onSubmit }) => {
     phoneNumber: '',
     note: ''
   });
-  const [erros, setErros] = useState();
+
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [numberOfTableError, setNumberOfTableError] = useState('');
+  const [numberOfGuestError, setNumberOfGuestError] = useState('');
+  const isValid =
+    !phoneNumberError &&
+    !numberOfGuestError &&
+    !numberOfTableError &&
+    !!formValues.address &&
+    !!formValues.phoneNumber &&
+    !!formValues.date &&
+    !!formValues.clientName &&
+    !!formValues.tableNo &&
+    !!formValues.tableType &&
+    !!formValues.tableNo;
+
+  const validateFormValues = (type, e) => {
+    const value = e.target.value;
+    if (type === 'phoneNumber' && !digits.test(value) && value.length) {
+      setPhoneNumberError('Invalid phone number!');
+      return;
+    }
+    if (type === 'numberOfGuests' && !digits.test(value) && value.length) {
+      setNumberOfGuestError('Invalid number of guests!');
+      return;
+    }
+    if (type === 'numberOfTables' && !digits.test(value) && value.length) {
+      setNumberOfTableError('Invalid number of tables!');
+      return;
+    }
+    setPhoneNumberError('');
+    setNumberOfGuestError('');
+    setNumberOfTableError('');
+  };
 
   const tableTypeSelect = useMemo(() => {
     return tableTypes.map((item) => {
@@ -66,18 +100,18 @@ export const BookTable = ({ onSubmit }) => {
         </Typography>
       </Box>
       <Stack spacing={3}>
-        <FormControl fullWidth>
+        <FormControl fullWidth required>
           <FormLabel>
-            <Typography>Address</Typography>
+            <Typography component={'span'}>Address</Typography>
           </FormLabel>
           <OutlinedInput
             value={formValues.address}
             onChange={(e) => handleFormValuesChange('address', e.target.value)}
           />
         </FormControl>
-        <FormControl fullWidth>
+        <FormControl fullWidth required>
           <FormLabel>
-            <Typography>Name</Typography>
+            <Typography component={'span'}>Name</Typography>
           </FormLabel>
           <OutlinedInput
             value={formValues.clientName}
@@ -85,38 +119,46 @@ export const BookTable = ({ onSubmit }) => {
           />
         </FormControl>
         <Stack direction={'row'} spacing={2}>
-          <FormControl fullWidth>
+          <FormControl fullWidth error={!!numberOfGuestError} required>
             <FormLabel>
-              <Typography>Number Of Guest</Typography>
+              <Typography component={'span'}>Number Of Guest</Typography>
             </FormLabel>
             <OutlinedInput
               value={formValues.guestNo}
-              onChange={(e) => handleFormValuesChange('guestNo', e.target.value)}
+              onChange={(e) => {
+                handleFormValuesChange('guestNo', e.target.value);
+                validateFormValues('numberOfGuests', e);
+              }}
             />
+            <FormHelperText sx={{ ml: 0 }}>{numberOfGuestError}</FormHelperText>
           </FormControl>
-          <FormControl fullWidth>
+          <FormControl fullWidth error={!!numberOfTableError} required>
             <FormLabel>
-              <Typography>Number Of Table</Typography>
+              <Typography component={'span'}>Number Of Table</Typography>
             </FormLabel>
             <OutlinedInput
               value={formValues.tableNo}
-              onChange={(e) => handleFormValuesChange('tableNo', e.target.value)}
+              onChange={(e) => {
+                handleFormValuesChange('tableNo', e.target.value);
+                validateFormValues('numberOfTables', e);
+              }}
             />
+            <FormHelperText sx={{ ml: 0 }}>{numberOfTableError}</FormHelperText>
           </FormControl>
         </Stack>
         <Stack direction={'row'} spacing={2}>
-          <FormControl fullWidth>
+          <FormControl fullWidth required>
             <FormLabel>
-              <Typography>Booking Time</Typography>
+              <Typography component={'span'}>Booking Time</Typography>
             </FormLabel>
             <CustomDatePicker
               value={formValues.date}
               onChange={(value) => handleFormValuesChange('date', value)}
             />
           </FormControl>
-          <FormControl fullWidth>
+          <FormControl fullWidth required>
             <FormLabel>
-              <Typography>Table Type</Typography>
+              <Typography component={'span'}>Table Type</Typography>
             </FormLabel>
             <Select
               value={formValues.tableType}
@@ -125,19 +167,21 @@ export const BookTable = ({ onSubmit }) => {
             </Select>
           </FormControl>
         </Stack>
-        <FormControl fullWidth>
+        <FormControl fullWidth error={!!phoneNumberError} required>
           <FormLabel>
-            <Typography>Phone No.</Typography>
+            <Typography component={'span'}>Phone No.</Typography>
           </FormLabel>
           <OutlinedInput
             value={formValues.phoneNumber}
-            onChange={(e) => handleFormValuesChange('phoneNumber', e.target.value)}
+            onChange={(e) => {
+              handleFormValuesChange('phoneNumber', e.target.value);
+              validateFormValues('phoneNumber', e);
+            }}
           />
+          <FormHelperText sx={{ ml: 0 }}>{phoneNumberError}</FormHelperText>
         </FormControl>
         <FormControl fullWidth>
-          <FormLabel>
-            <Typography>Note</Typography>
-          </FormLabel>
+          <FormLabel>Note</FormLabel>
           <OutlinedInput
             multiline
             rows={3}
@@ -145,7 +189,10 @@ export const BookTable = ({ onSubmit }) => {
             onChange={(e) => handleFormValuesChange('note', e.target.value)}
           />
         </FormControl>
-        <CustomButton padding={'16px 24px'} onClick={() => onSubmit(formValues)}>
+        <CustomButton
+          disabled={!isValid}
+          padding={'16px 24px'}
+          onClick={() => onSubmit(formValues)}>
           Send Request
         </CustomButton>
       </Stack>
