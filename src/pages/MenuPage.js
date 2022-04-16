@@ -53,7 +53,7 @@ export const MenuPage = () => {
 
   const fetchFood = useCallback(async () => {
     try {
-      const res = await customAxios.get(`/products/category/${selectedType}`);
+      const res = await customAxios.get(`/category/${selectedType}`);
       setProducts(res.data);
     } catch (err) {
       throw new Error(err);

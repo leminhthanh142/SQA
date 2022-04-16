@@ -41,7 +41,7 @@ export const PopularDishes = () => {
 
   const fetchFood = useCallback(async () => {
     try {
-      const res = await customAxios.get(`/products/category/${selectedType}`);
+      const res = await customAxios.get(`/category/${selectedType}`);
       setPopularDishes(res.data);
     } catch (err) {
       throw new Error(err);
