@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export const customAxios = axios.create({
-  baseURL: 'https://sqafood.herokuapp.com/api',
+  baseURL: 'http://localhost:8080/api',
   timeout: 10000
 });
