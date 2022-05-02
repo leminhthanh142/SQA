@@ -34,7 +34,7 @@ export const MenuPage = () => {
       date: new Date()
     };
     try {
-      await customAxios.post('/reservation', {
+      await customAxios.post('/reservation/new-reservation', {
         ...params
       });
       setFlash({ type: 'success', message: 'Book table successfully' });

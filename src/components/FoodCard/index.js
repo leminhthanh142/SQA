@@ -6,15 +6,15 @@ export const FoodCard = ({ name, description, price, image }) => {
   return (
     <Container>
       <Box position={'relative'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-        <StyledCardMedia component={'img'} image={image} />
+        <StyledImage src={image} alt={''} />
         <PriceTag>${price}</PriceTag>
       </Box>
       <Typography align={'center'} sx={{ mb: 2 }} variant={'h5'}>
         {name}
       </Typography>
-      <Typography align={'center'} sx={{ mb: 4 }}>
+      <Description align={'center'} sx={{ mb: 4 }}>
         {description}
-      </Typography>
+      </Description>
     </Container>
   );
 };
@@ -23,14 +23,18 @@ const Container = styled(Card)({
   padding: '35px 40px 60px 40px',
   margin: '0 12px',
   borderRadius: '10px',
-  minHeight: 480
+  height: 480
 });
 
-const StyledCardMedia = styled(CardMedia)({
+const StyledImage = styled('img')({
   maxWidth: 200,
   height: 200,
   borderRadius: '50%',
   marginBottom: 26
+});
+
+const Description = styled(Typography)({
+  overflow: 'auto'
 });
 
 const PriceTag = styled(Typography)({
