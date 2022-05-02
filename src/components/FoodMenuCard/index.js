@@ -12,9 +12,9 @@ export const FoodMenuCard = ({ name, description, price, image, onOrder }) => {
       <Typography align={'center'} sx={{ mb: 2 }} variant={'h5'}>
         {name}
       </Typography>
-      <Typography align={'center'} sx={{ mb: 4 }}>
+      <StyledDescription align={'center'} sx={{ mb: 4 }}>
         {description}
-      </Typography>
+      </StyledDescription>
       <StyledTypography align={'center'} sx={{ mb: 4 }} onClick={onOrder}>
         Add to cart
       </StyledTypography>
@@ -24,7 +24,7 @@ export const FoodMenuCard = ({ name, description, price, image, onOrder }) => {
 
 const Container = styled(Card)({
   padding: '35px 40px 20px 40px',
-  minHeight: 515,
+  minHeight: 562,
   maxWidth: 416,
   width: '100%',
   transition: 'all 0.6s',
@@ -36,6 +36,11 @@ const Container = styled(Card)({
     borderColor: '#ffffff',
     boxShadow: '-5px 15px 25px 12px rgba(255,146,146,0.1)'
   }
+});
+
+const StyledDescription = styled(Typography)({
+  maxHeight: 100,
+  overflow: 'auto'
 });
 
 const StyledCardMedia = styled(CardMedia)({

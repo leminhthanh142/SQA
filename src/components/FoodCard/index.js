@@ -34,6 +34,7 @@ const StyledImage = styled('img')({
 });
 
 const Description = styled(Typography)({
+  maxHeight: 100,
   overflow: 'auto'
 });
 

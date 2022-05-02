@@ -74,7 +74,7 @@ export const PopularDishes = () => {
               key={dish.id}
               name={dish.name}
               description={dish.description}
-              image={dish.image}
+              image={dish.imageName}
               price={dish.price}
             />
           ))}
