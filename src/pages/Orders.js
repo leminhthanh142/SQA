@@ -116,7 +116,7 @@ export const OrdersPage = () => {
     try {
       const promiseAll = [];
       const userInformationParams = {
-        userName,
+        username: userName,
         address,
         phoneNo: phoneNumber,
         date: new Date()
@@ -127,7 +127,7 @@ export const OrdersPage = () => {
             ...userInformationParams,
             productId: Number(order.productId),
             quantity: order.quantity,
-            total: order.total
+            total: order.price * order.quantity
           })
         )
       );
