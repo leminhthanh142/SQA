@@ -25,7 +25,7 @@ export const HomePage = () => {
       appointmentHour,
       appointmentTime,
       address: values.address,
-      date: new Date()
+      date: moment(new Date()).format('yyyy-MM-dd HH:ss')
     };
     try {
       await customAxios.post('/reservation/new-reservation', {
