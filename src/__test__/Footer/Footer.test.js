@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import { render } from '@testing-library/react';
-import { Footer } from '../../components/Footer';
+import { Footer } from '../../components/footer';
 import React from 'react';
 import { BrowserRouter } from "react-router-dom";
 
