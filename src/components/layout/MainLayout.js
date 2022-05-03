@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { Header } from '../Header';
 import { Footer } from '../footer';
 
-export const MainLayout = ({ children }) => {
+export const MainLayout = ({ children, isHideBookTable }) => {
   return (
     <Box>
-      <Header />
+      <Header isHideBookTable={isHideBookTable} />
       {children}
       <Footer />
     </Box>
@@ -15,5 +15,6 @@ export const MainLayout = ({ children }) => {
 };
 
 MainLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  isHideBookTable: PropTypes.bool
 };

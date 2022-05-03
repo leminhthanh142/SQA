@@ -6,7 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 
 it('MainLayout renders correctly', () => {
   const props = {
-    children: <div>Children</div>
+    children: <div>Children</div>,
+    isHideBookTable: false
   }
   const tree = render(<MainLayout {...props}/>, {wrapper: BrowserRouter});
   expect(tree).toMatchSnapshot();

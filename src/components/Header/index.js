@@ -5,8 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CustomButton } from '../CustomButton';
 import { styled } from '@mui/system';
 import { useOrders } from '../../context/orders';
+import PropTypes from 'prop-types';
 
-export const Header = () => {
+export const Header = ({ isHideBookTable }) => {
   const [isShrink, setIsShrink] = useState(false);
   const navigate = useNavigate();
   const { orders } = useOrders();
@@ -39,9 +40,11 @@ export const Header = () => {
         <Link to={'/contact'}>Contact</Link>
       </Stack>
       <Box position={'relative'}>
-        <a id={'booking-btn'} href={'#booking'}>
-          Book a Table
-        </a>
+        {!isHideBookTable && (
+          <a id={'booking-btn'} href={'#booking'}>
+            Book a Table
+          </a>
+        )}
         <CustomButton variant={'contained'} width={130} onClick={() => navigate('/orders')}>
           <ShoppingCartIcon />
         </CustomButton>
@@ -105,3 +108,7 @@ const StyledTag = styled(Chip)({
     color: '#ffffff'
   }
 });
+
+Header.propTypes = {
+  isHideBookTable: PropTypes.bool
+};
