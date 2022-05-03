@@ -45,7 +45,7 @@ export const Header = () => {
         <CustomButton variant={'contained'} width={130} onClick={() => navigate('/orders')}>
           <ShoppingCartIcon />
         </CustomButton>
-        {!!orders.length && <StyledTag label={orders.length} />}
+        {!!orders?.length && <StyledTag label={orders.length} />}
       </Box>
     </Container>
   );

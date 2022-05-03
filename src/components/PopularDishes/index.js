@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Box, styled, Typography, Stack, IconButton } from '@mui/material';
-import { customAxios } from '../../customAxios';
 import { FoodCard } from '../FoodCard';
 import Slider from 'react-slick';
 import { Wrapper } from '../../pages/HomePage';
@@ -9,7 +8,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Categories } from '../../type/index';
+import PropTypes from 'prop-types';
 
 const arrowStyle = {
   color: 'rgba(255,255,255,0.53)',
@@ -26,27 +25,8 @@ const options = {
   prevArrow: <ArrowBackIosNewIcon fontSize={'large'} sx={arrowStyle} />
 };
 
-export const PopularDishes = () => {
-  const [popularDishes, setPopularDishes] = useState([]);
-  const [selectedType, setSelectedType] = useState(Categories.BreakFast);
+export const PopularDishes = ({ popularDishes, onChangeDishesType, selectedDishType }) => {
   const sliderRef = useRef();
-
-  const handleChangeDishesType = (type) => {
-    setSelectedType(type);
-  };
-
-  useEffect(() => {
-    fetchFood();
-  }, [selectedType]);
-
-  const fetchFood = useCallback(async () => {
-    try {
-      const res = await customAxios.get(`/category/${selectedType}`);
-      setPopularDishes(res.data);
-    } catch (err) {
-      throw new Error(err);
-    }
-  }, [selectedType]);
 
   return (
     <Container mt={15}>
@@ -61,8 +41,10 @@ export const PopularDishes = () => {
         </Box>
         <Stack direction={'row'} spacing={6} mb={4}>
           {dishesType.map((dishType) => (
-            <Box key={dishType.type} onClick={() => handleChangeDishesType(dishType.type)}>
-              <StyledTypography isSelected={selectedType === dishType.type} variant={'subtitle1'}>
+            <Box key={dishType.type} onClick={() => onChangeDishesType(dishType.type)}>
+              <StyledTypography
+                isSelected={selectedDishType === dishType.type}
+                variant={'subtitle1'}>
                 {dishType.name}
               </StyledTypography>
             </Box>
@@ -115,3 +97,9 @@ const StyledTypography = styled(Typography)(({ isSelected }) => ({
     }
   }
 }));
+
+PopularDishes.propTypes = {
+  popularDishes: PropTypes.arrayOf(PropTypes.object),
+  onChangeDishesType: PropTypes.func,
+  selectedDishType: PropTypes.number
+};

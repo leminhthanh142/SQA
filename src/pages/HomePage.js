@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MainLayout } from '../components/layout/MainLayout';
 import { informationCard } from '../dummyData';
 import { InformationCard } from '../components/InformationCard';
@@ -9,9 +9,29 @@ import { HeroBackground } from '../components/HeroBackground';
 import { customAxios } from '../customAxios';
 import { useFlash } from '../context/flash';
 import moment from 'moment';
+import { Categories } from '../type';
 
 export const HomePage = () => {
   const { setFlash } = useFlash();
+
+  const [popularDishes, setPopularDishes] = useState([]);
+  const [selectedDishType, setSelectedDishType] = useState(Categories.BreakFast);
+  const handleChangeDishesType = (type) => {
+    setSelectedDishType(type);
+  };
+
+  useEffect(() => {
+    fetchFood();
+  }, [selectedDishType]);
+
+  const fetchFood = useCallback(async () => {
+    try {
+      const res = await customAxios.get(`/category/${selectedDishType}`);
+      setPopularDishes(res.data);
+    } catch (err) {
+      throw new Error(err);
+    }
+  }, [selectedDishType]);
 
   const handleSubmitBooking = useCallback(async (values) => {
     const appointmentTime = moment(values.date).format('YYYY-MM-DD');
@@ -67,7 +87,11 @@ export const HomePage = () => {
           ))}
         </Stack>
       </Wrapper>
-      <PopularDishes />
+      <PopularDishes
+        popularDishes={popularDishes}
+        onChangeDishesType={handleChangeDishesType}
+        selectedDishType={selectedDishType}
+      />
       <Wrapper>
         <BookTable onSubmit={handleSubmitBooking} />
       </Wrapper>
