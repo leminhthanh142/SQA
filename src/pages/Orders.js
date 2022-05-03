@@ -328,7 +328,7 @@ export const OrdersPage = () => {
 
   if (!orders.length) {
     return (
-      <MainLayout>
+      <MainLayout isHideBookTable>
         <HeroBackground
           title="Orders"
           des="Making a reservation at Délicious restaurant is easy and takes just a couple of minutes."
